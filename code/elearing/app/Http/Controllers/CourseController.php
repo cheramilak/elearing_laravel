@@ -1,0 +1,78 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Course;
+use Illuminate\Support\Facades\Storage;
+
+class CourseController extends Controller
+{
+    public function index(){
+        $course = Course::all();
+        $data = [
+          'course' => $course
+        ];
+        return view('admin.course.index',$data);
+      }
+
+      public function store(Request $request)
+      {
+          $request->validate([
+              'name' => 'required|string|max:255',
+              'status' => 'required|in:0,1',
+              'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+          ]);
+          $imagePath = null;
+          if ($request->hasFile('image')) {
+            $imageName =  time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+            $imagePath = 'images/'.$imageName;
+          }
+
+          Course::create([
+              'name' => $request->input('name'),
+              'status' => $request->input('status'),
+              'image' => $imagePath,
+          ]);
+
+
+          return redirect()->route('course')->with('success','course add  success');
+      }
+
+      public function update(Request $request) {
+        $request->validate([
+          'name' => 'required|string|max:255',
+          'status' => 'required|string',
+          'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+          'id' => 'required|integer'
+      ]);
+
+      $course = Course::findOrFail($request->id);
+
+      $imagePath = $course->image;
+      if ($request->hasFile('image')) {
+          if ($course->image) {
+              Storage::disk('public')->delete($course->image);
+          }
+          $imageName =  time() . '.' . $request->image->extension();
+          $request->image->move(public_path('images'), $imageName);
+          $imagePath = 'images/'.$imageName;
+      }
+
+      $course->update([
+          'name' => $request->input('name'),
+          'status' => $request->input('status'),
+          'image' => $imagePath,
+      ]);
+
+      return redirect()->route('course')->with('success', 'Course updated successfully.');
+
+    }
+
+    public function delete($id){
+      $uni = Course::findOrFail($id);
+      $uni->delete();
+      return redirect()->route('universty')->with('success', 'delete successfully.');
+    }
+}
