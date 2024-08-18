@@ -398,7 +398,7 @@
                         <h6>Quick Links</h6>
                         <ul>
                             <li><a href="event-search.html">Events</a></li>
-                            <li><a href="become-instructor.html">Become a Instructor</a></li>
+                            <li><a href="{{ route('signupInstructor') }}">Become a Instructor</a></li>
                             <li><a href="#">Partnerships</a></li>
                             <li><a href="#">Get the app</a></li>
                         </ul>

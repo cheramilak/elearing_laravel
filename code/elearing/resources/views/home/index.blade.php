@@ -48,6 +48,18 @@
     <div class="container">
         <h2 class="font-title--md text-center mb-0">Browse Course with Top Categories</h2>
         <div class="browse-categories__wrapper position-relative">
+            @foreach ($course as $item)
+            <div class="col-lg-4 col-md-6 d-flex justify-content-center mb-4">
+                <div class="cardFeature">
+                    <div class="card text-center">
+                        <div class="card-body d-flex flex-column align-items-center">
+                            <img width="150" height="100" src="{{ asset($item->image) }}" alt="" class="img-fluid mb-3">
+                            <h5 class="font-title--xs">{{ $item->name }}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
 
         </div>
         <div class="row">
