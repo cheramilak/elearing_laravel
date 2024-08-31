@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="{{asset('frontend/dist/main.css')}}" />
     <link rel="icon" type="image/png" href="{{asset('frontend/dist/images/favicon/favicon.png')}}" />
     <link rel="stylesheet" href="{{asset('frontend/fontawesome-free-5.15.4-web/css/all.min.css')}}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    @yield('css')
     <style>
         .dropdown {
             position: relative;
@@ -63,13 +65,13 @@
                 <div class="collapse navbar-collapse d-none d-xl-block d-none d-xl-block" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="">Home</a>
+                            <a class="nav-link" aria-current="page" href="{{ route('index') }}">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="">Courses</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="">About</a>
+                            <a class="nav-link" aria-current="page" href="{{ route('about') }}">About</a>
                         </li>
                         {{-- <li class="nav-item">
                             <a class="nav-link" href="http://localhost:8081/">
@@ -77,10 +79,10 @@
                             </a>
                         </li> --}}
                         <li class="nav-item">
-                            <a class="nav-link" href="">Contact</a>
+                            <a class="nav-link" href="{{ route('contact') }}">Contact</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="">Admin</a>
+                            <a class="nav-link" href="{{ route('course') }}">Admin</a>
                         </li>
                     </ul>
                     <div class="d-flex align-items-center justify-content-between rightContent">
@@ -504,6 +506,9 @@
     <script src="{{asset('frontend/src/scss/vendors/plugin/js/jquery.nice-select.min.js')}}"></script>
     <script src="{{asset('frontend/src/js/app.js')}}"></script>
     <script src="{{asset('frontend/dist/main.js')}}"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
         function toggleDropdown(event) {
@@ -539,6 +544,8 @@
     </script>
 
     @stack('scripts')
+
+    @yield('js')
 
 
 </body>

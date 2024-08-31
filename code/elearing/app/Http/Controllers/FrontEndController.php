@@ -12,6 +12,22 @@ class FrontEndController extends Controller
         $data = [
             'course' => $course
         ];
-        return view('home.index',$data);
+        return view('home.shedule',$data);
+    }
+
+    public function about(){
+        $course = course::all();
+        $data = [
+            'course' => $course
+        ];
+        return view('home.about',$data);
+    }
+
+    public function contact(){
+        $course = course::all();
+        $data = [
+            'course' => $course
+        ];
+        return view('home.contact',$data);
     }
 }

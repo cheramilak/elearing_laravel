@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Mini bank</title>
+  <title>Askual education</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="{{ asset('assets/vendors/mdi/css/materialdesignicons.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendors/base/vendor.bundle.base.css') }}">
@@ -18,6 +18,8 @@
 <!-- Core CSS -->
 <link rel="stylesheet" href="{{ asset('assets/vendors/css/core.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/vendors/css/theme-default.css') }}" />
+{{-- <link rel="stylesheet" href="{{ asset('assets/vendors/css/summernote-bs4.min.css') }}" /> --}}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css" rel="stylesheet">
   <!-- inject:css -->
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}">
@@ -43,8 +45,8 @@
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="navbar-brand-wrapper d-flex justify-content-center">
         <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
-          <a class="navbar-brand brand-logo" href="/"><img src=" {{asset('assets/images/logo.png')}}" alt="logo"/></a>
-          <a class="navbar-brand brand-logo-mini" href="/"><img src="{{asset('assets/images/logo.png')}}" alt="logo"/></a>
+          {{-- <a class="navbar-brand brand-logo" href="/"><img src=" {{asset('assets/images/logo.png')}}" alt="logo"/></a>
+          <a class="navbar-brand brand-logo-mini" href="/"><img src="{{asset('assets/images/logo.png')}}" alt="logo"/></a> --}}
           <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
             <span class="mdi mdi-sort-variant"></span>
           </button>
@@ -83,30 +85,30 @@
               <span class="menu-title">Dashboard</span>
             </a>
           </li>
-          @if (Auth()->user()->type == 1)
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('users') }}">
-              <i class="mdi mdi-account menu-icon"></i>
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="mdi mdi-circle-outline menu-icon"></i>
               <span class="menu-title">Users</span>
+              <i class="menu-arrow"></i>
             </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{{ route('usersFilter',['type' =>0]) }}">Student</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('usersFilter',['type' =>1]) }}">Instructor</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('usersFilter',['type' =>2]) }}">Admin</a></li>
+              </ul>
+            </div>
           </li>
-          @endif
           <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="{{ route('course') }}">
               <i class="mdi mdi-account-circle  menu-icon"></i>
-              <span class="menu-title">Customers</span>
+              <span class="menu-title">Course</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="{{ route('confgis') }}">
               <i class="mdi mdi-bank menu-icon"></i>
-              <span class="menu-title">Banks</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="">
-              <i class="mdi mdi-currency-usd menu-icon"></i>
-              <span class="menu-title">Exchnage</span>
+              <span class="menu-title">Config</span>
             </a>
           </li>
         </ul>
@@ -142,6 +144,8 @@
   <script src="{{ asset('assets/js/data-table.js') }}"></script>
   <script src="{{ asset('assets/js/jquery.dataTables.js') }}"></script>
   <script src="{{ asset('assets/js/dataTables.bootstrap4.js') }}"></script>
+  <script src="{{ asset('assets/js/summernote-bs4.min.js') }}"></script>
+
   <!-- End custom js for this page-->
 
   <script src="{{ asset('assets/js/jquery.cookie.js') }}" type="text/javascript"></script>

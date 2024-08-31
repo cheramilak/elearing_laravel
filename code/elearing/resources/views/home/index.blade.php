@@ -9,28 +9,15 @@
 <section class="main-banner" style="background-image: url({{asset('frontend/dist/images/banner/banner.jpg')}});">
     <div class="container">
         <div class="row">
-            <div class="col-lg-7 mb-lg-0 order-2 order-lg-0 d-flex align-items-center">
+            <div class="col-lg-7 mb-lg-0 order-2 order-lg-0 d-flex align-items-top">
                 <div class="banner-two-start">
                     <h1 class="font-title--lg">Unlock Knowledge Anywhere, Anytime with Experts.</h1>
-                    <p>
-                       Our commitment is to guide you to the finest online courses, offering expert insights whenever and wherever you are.
-                    </p>
-                    <form>
-                        <div class="banner-input">
-                            <div class="main-input">
-                                <input type="text" placeholder="what do you want to learn today..." />
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-search">
-                                    <circle cx="11" cy="11" r="8"></circle>
-                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                                </svg>
-                            </div>
-                            <div class="search-button">
-                                <button class="button button-lg button--primary">Search</button>
-                            </div>
-                        </div>
-                    </form>
+                    <div class="search-button mb-3">
+                        <button class="button button-lg button--primary">I'm a Student</button>
+                    </div>
+                    <div class="search-button">
+                        <button class="button button-lg button--primary">I'm a Instructor</button>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-5 order-1 order-lg-0">
@@ -113,7 +100,8 @@
                                 stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
                                 stroke-linejoin="round" />
                             <path fill-rule="evenodd" clip-rule="evenodd"
-                                d="M10.5994 18.0913C15.6425 18.0913 19.9504 18.8553 19.9504 21.9071C19.9504 24.9604 15.6699 25.7503 10.5994 25.7503C5.55624 25.7503 1.24976 24.9877 1.24976 21.9345C1.24976 18.8813 5.52891 18.0913 10.5994 18.0913Z"
+                                d="M10.5994 18.0
+                                913C15.6425 18.0913 19.9504 18.8553 19.9504 21.9071C19.9504 24.9604 15.6699 25.7503 10.5994 25.7503C5.55624 25.7503 1.24976 24.9877 1.24976 21.9345C1.24976 18.8813 5.52891 18.0913 10.5994 18.0913Z"
                                 stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
                                 stroke-linejoin="round" />
                             <path fill-rule="evenodd" clip-rule="evenodd"

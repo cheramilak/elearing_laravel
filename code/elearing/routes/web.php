@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FrontEndController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(FrontEndController::class)->group(function (){
     route::get('/','index')->name('index');
+    route::get('/about','about')->name('about');
+    route::get('/contact','contact')->name('contact');
 });
 
 Route::get('/dashboard', function () {
@@ -34,8 +38,14 @@ Route::controller(CourseController::class)->prefix('/course')->group(function ()
     route::get('/delete/{id}','delete')->name('deleteCourse');
 });
 
+Route::controller(SubjectController::class)->prefix('/subjects')->group(function (){
+    route::get('/','index')->name('subjects');
+    route::post('/store','store')->name('storeSubjects');
+    route::post('/update','update')->name('updateSubjects');
+});
+
 Route::controller(UserController::class)->prefix('users/')->group(function (){
-    route::get('/','index')->name('users');
+    route::get('/{type}','index')->name('usersFilter');
     route::get('/create','create')->name('createUser');
     route::post('/store','store')->name('storeUser');
     route::post('/update/{id}','update')->name('updateUser');
@@ -43,7 +53,13 @@ Route::controller(UserController::class)->prefix('users/')->group(function (){
     route::get('/profile/{id}','profile')->name('userProfile');
     route::get('/downloadTeacherCv/{id}','downloadTeacherCv')->name('downloadTeacherCv');
     route::post('/updateTeacher/{id}','updateTeacher')->name('updateTeacher');
+    route::post('/updateProfilePhoto/{id}','updateProfilePhoto')->name('updateProfilePhoto');
 
+});
+
+Route::controller(ConfigController::class)->prefix('/config')->group(function (){
+    route::get('/','index')->name('confgis');
+    route::post('update/{slug}','update')->name('updateConfig');
 });
 
 });

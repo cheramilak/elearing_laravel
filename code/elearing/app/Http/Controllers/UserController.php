@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-  public function index()
+  public function index($type)
   {
-    $user = User::all();
+    $user = User::where('type',$type)->get();
     $data = [
       'users' => $user
     ];
@@ -131,8 +131,25 @@ class UserController extends Controller
         $profile->file = $filePath;
     }
     $profile->phone = $request->phone;
-    $profile->address = $user->address;
+    $profile->address = $request->address;
     $profile->update();
     return back()->with('success','update success');
+  }
+
+  public function updateProfilePhoto(Request $request,$id){
+    $request->validate([
+        'image' => 'required|image|mimes:jpeg,png,jpg',
+    ]);
+
+    $user = User::find($id);
+    $profile = TeacherProfile::where('user_id',$id)->first();
+    if ($request->hasFile('image')) {
+        $fileName =  time() . '.' . $request->image->extension();
+        $request->image->move(public_path('profile'), $fileName);
+        $filePath = 'profile/'.$fileName;
+        $profile->image = $filePath;
+    }
+    $profile->update();
+    return back()->with('success','update profile success');
   }
 }

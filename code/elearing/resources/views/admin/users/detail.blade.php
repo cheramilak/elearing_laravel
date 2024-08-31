@@ -32,15 +32,15 @@
       <h4 class="card-header">Profile Details</h4>
       <!-- Account -->
       <div class="card-body">
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('updateProfilePhoto',$user->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="d-flex align-items-start align-items-sm-center gap-4">
-                <img src="{{ asset('assets/img/avatars/1.png') }}" height="200" width="200" alt="user-avatar" class="d-block w-px-120 h-px-120 rounded mt-1" id="uploadedAvatar" />
+                <img src="{{ $profile->image == '' ? asset('assets/img/avatars/1.png') : asset( $profile->image ) }}" height="200" width="200" alt="user-avatar" class="d-block w-px-120 h-px-120 rounded mt-1" id="uploadedAvatar" />
                 <div class="button-wrapper">
                     <label for="upload" class="btn btn-primary me-2 mb-3" tabindex="0">
                         <span class="d-none d-sm-block">Upload new photo</span>
                         <i class="mdi mdi-tray-arrow-up d-block d-sm-none"></i>
-                        <input type="file" id="upload" class="account-file-input" hidden accept="image/png, image/jpeg" onchange="previewImage(event)" />
+                        <input type="file" name="image" id="upload" class="account-file-input" hidden accept="image/png, image/jpeg" onchange="previewImage(event)" />
                     </label>
                     <button type="button" class="btn btn-outline-danger account-image-reset mb-3" onclick="resetImage()">
                         <i class="mdi mdi-reload d-block d-sm-none"></i>
@@ -92,7 +92,7 @@
                     <option value="1" {{ $user->status == 1 ? 'selected' : '' }}>Active</option>
                     <option value="3" {{ $user->status == 3 ? 'selected' : '' }}>Pending</option>
                     <option value="0" {{ $user->status == 0 ? 'selected' : '' }}>Block</option>
-                  </select>
+                </select>
                 <label for="status">Status</label>
               </div>
             </div>
