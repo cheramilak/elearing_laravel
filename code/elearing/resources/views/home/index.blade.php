@@ -13,7 +13,7 @@
                 <div class="banner-two-start">
                     <h1 class="font-title--lg">Unlock Knowledge Anywhere, Anytime with Experts.</h1>
                     <div class="search-button mb-3">
-                        <button class="button button-lg button--primary">I'm a Student</button>
+                        <a href="{{ route('getCategory') }}" class="button button-lg button--primary">I'm a Student</a>
                     </div>
                     <div class="search-button">
                         <button class="button button-lg button--primary">I'm a Instructor</button>

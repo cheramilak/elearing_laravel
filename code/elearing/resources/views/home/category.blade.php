@@ -9,8 +9,8 @@
         <h2 class="font-title--md text-center">What you want to study</h2>
         <form action="" method="post">
         <div class="row">
-
             <div class="col-lg-3 col-md-6">
+                <a href="{{ route('setCategory',1) }}">
                 <div class="cardFeature">
                     <div class="cardFeature__icon cardFeature__icon--bg-b">
                            <img src="{{ asset('assets/images/teacher.svg') }}" alt="">
@@ -21,8 +21,10 @@
                         interdum.
                     </p>
                 </div>
+            </a>
             </div>
             <div class="col-lg-3 col-md-6">
+                <a href="{{ route('setCategory',2) }}">
                 <div class="cardFeature">
                     <div class="cardFeature__icon cardFeature__icon--bg-b">
                         <img src="{{ asset('assets/images/interview.svg') }}" alt="">
@@ -33,8 +35,10 @@
                         interdum.
                     </p>
                 </div>
+                </a>
             </div>
             <div class="col-lg-3 col-md-6">
+                <a href="{{ route('setCategory',3) }}">
                 <div class="cardFeature">
                     <div class="cardFeature__icon cardFeature__icon--bg-b">
                         <img src="{{ asset('assets/images/course.svg') }}" alt="">
@@ -45,8 +49,10 @@
                         interdum.
                     </p>
                 </div>
+                </a>
             </div>
             <div class="col-lg-3 col-md-6">
+                <a href="{{ route('setCategory',4) }}">
                 <div class="cardFeature">
                     <div class="cardFeature__icon cardFeature__icon--bg-r">
                         <img src="{{ asset('assets/images/startup.svg') }}" alt="">
@@ -57,8 +63,8 @@
                         euismod turpis.
                     </p>
                 </div>
+                </a>
             </div>
-
         </div>
     </form>
     </div>

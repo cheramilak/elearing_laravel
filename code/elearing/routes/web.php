@@ -19,6 +19,15 @@ Route::controller(FrontEndController::class)->group(function (){
     route::get('/','index')->name('index');
     route::get('/about','about')->name('about');
     route::get('/contact','contact')->name('contact');
+    route::get('/getCategory','getCategory')->name('getCategory');
+    route::get('/setCategory/{cat}','setCategory')->name('setCategory');
+    route::get('/setType/{type}','setType')->name('setType');
+    route::post('/setSubjects','setSubject')->name('setSubjects');
+    route::post('storeSchedule','storeSchedule')->name('storeSchedule');
+    route::get('/selectShedule','selectShedule')->name('selectShedule');
+    route::get('/showCheckout','showCheckout')->name('showCheckout');
+    route::get('/selectGrade','selectGrade')->name('selectGrade');
+    route::post('setGrade','setGrade')->name('setGrade');
 });
 
 Route::get('/dashboard', function () {
