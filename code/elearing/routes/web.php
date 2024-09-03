@@ -10,6 +10,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\AdminMiddlware;
 use Illuminate\Support\Facades\Route;
 
 
@@ -46,51 +47,57 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::middleware('auth')->group(function () {
-Route::controller(CourseController::class)->prefix('/course')->group(function (){
-    route::get('/','index')->name('course');
-    route::post('/store','store')->name('storeCourse');
-    route::post('/update','update')->name('updateCourse');
-    route::get('/delete/{id}','delete')->name('deleteCourse');
-});
+Route::middleware('auth')->prefix('admin')->group(function () {
 
-Route::controller(AdminStudentFomrController::class)->prefix('forms')->group(function (){
-    route::get('/','index')->name('forms');
-    route::get('detail/{id}','detail')->name('formDetail');
-});
+    Route::controller(CourseController::class)->prefix('/course')->group(function (){
+        route::get('/','index')->name('course');
+        route::post('/store','store')->name('storeCourse');
+        route::post('/update','update')->name('updateCourse');
+        route::get('/delete/{id}','delete')->name('deleteCourse');
+    });
 
-Route::controller(ReaserchController::class)->prefix('/research')->group(function (){
-    route::get('/','index')->name('research');
-    route::post('/store','store')->name('storeresearch');
-    route::post('/update','update')->name('updateresearch');
-    route::get('/delete/{id}','delete')->name('deleteresearch');
-});
+    Route::controller(AdminStudentFomrController::class)->prefix('forms')->group(function (){
+        route::get('/','index')->name('forms');
+        route::get('detail/{id}','detail')->name('formDetail');
+    });
 
-Route::controller(SubjectController::class)->prefix('/subjects')->group(function (){
-    route::get('/','index')->name('subjects');
-    route::post('/store','store')->name('storeSubjects');
-    route::post('/update','update')->name('updateSubjects');
-});
+    Route::controller(ReaserchController::class)->prefix('/research')->group(function (){
+        route::get('/','index')->name('research');
+        route::post('/store','store')->name('storeresearch');
+        route::post('/update','update')->name('updateresearch');
+        route::get('/delete/{id}','delete')->name('deleteresearch');
+    });
 
-Route::controller(UserController::class)->prefix('users/')->group(function (){
-    route::get('/{type}','index')->name('usersFilter');
-    route::get('/create','create')->name('createUser');
-    route::post('/store','store')->name('storeUser');
-    route::post('/update/{id}','update')->name('updateUser');
-    route::get('/edit/{id}','edit')->name('userEdit');
-    route::get('/profile/{id}','profile')->name('userProfile');
-    route::get('/downloadTeacherCv/{id}','downloadTeacherCv')->name('downloadTeacherCv');
-    route::post('/updateTeacher/{id}','updateTeacher')->name('updateTeacher');
-    route::post('/updateProfilePhoto/{id}','updateProfilePhoto')->name('updateProfilePhoto');
+    Route::controller(SubjectController::class)->prefix('/subjects')->group(function (){
+        route::get('/','index')->name('subjects');
+        route::post('/store','store')->name('storeSubjects');
+        route::post('/update','update')->name('updateSubjects');
+    });
 
-});
+    Route::controller(UserController::class)->prefix('users/')->group(function (){
+        route::get('/student','student')->name('students');
+        route::get('/teacher','teacher')->name('teachers');
+        route::get('/admin','admin')->name('admins');
+        route::get('/create','create')->name('createUser');
+        route::post('/store','store')->name('storeUser');
+        route::post('/update/{id}','update')->name('updateUser');
+        route::get('/edit/{id}','edit')->name('userEdit');
+        route::get('/profile/{id}','profile')->name('userProfile');
+        route::get('/studentDetail/{id}','studentDetail')->name('studentDetail');
+        route::get('/downloadTeacherCv/{id}','downloadTeacherCv')->name('downloadTeacherCv');
+        route::post('/updateTeacher/{id}','updateTeacher')->name('updateTeacher');
+        route::post('/updateStudent/{id}','updateStudent')->name('updateStudent');
+        route::post('/updateProfilePhoto/{id}','updateProfilePhoto')->name('updateProfilePhoto');
+        route::post('/updateStudentPhoto/{id}','updateStudentPhoto')->name('updateStudentPhoto');
+        route::post('/assignTeacher/{id}','assignTeacher')->name('assignTeacher');
+        route::post('/updateAssignTeacher','updateAssignTeacher')->name('updateAssignTeacher');
+    });
 
-Route::controller(ConfigController::class)->prefix('/config')->group(function (){
-    route::get('/','index')->name('confgis');
-    route::post('update/{slug}','update')->name('updateConfig');
-});
-
-});
+    Route::controller(ConfigController::class)->prefix('/config')->group(function (){
+        route::get('/','index')->name('confgis');
+        route::post('update/{slug}','update')->name('updateConfig');
+    });
+})->middleware(AdminMiddlware::class);;
 
 Route::controller(TeacherController::class)->group(function(){
     route::get('signup-instructor','signup')->name('signupInstructor');

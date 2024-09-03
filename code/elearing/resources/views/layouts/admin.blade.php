@@ -93,9 +93,9 @@
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{ route('usersFilter',['type' =>0]) }}">Student</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('usersFilter',['type' =>1]) }}">Instructor</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('usersFilter',['type' =>2]) }}">Admin</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('students',) }}">Student</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('teachers',) }}">Instructor</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('admins',) }}">Admin</a></li>
               </ul>
             </div>
           </li>

@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="card">
-  <h5 class="card-header">Users
+  <h5 class="card-header">Admin
     <a href="{{ route('createUser') }}" class="btn btn-sm btn-outline-primary float-end" ><i class="fas fa-user-shield"></i> Add new</a>
 
   </h5>
@@ -15,7 +15,6 @@
         <tr>
           <th>Name</th>
           <th>Email</th>
-          <th>User type</th>
           <th>status</th>
           <th>Action</th>
         </tr>
@@ -25,17 +24,6 @@
         <tr>
           <td>{{ $item->name }}</td>
           <td>{{ $item->email }}</td>
-          <td>
-            @if ($item->type == '0')
-            <span class="badge bg-label-danger me-1">Student</span>
-            @endif
-            @if ($item->type == '1')
-            <span class="badge bg-label-primary me-1">Teacher</span>
-            @endif
-            @if ($item->type == '2')
-            <span class="badge bg-label-primary me-1">Admin</span>
-            @endif
-          </td>
           <td>
             @if ($item->status == '0')
             <span class="badge bg-label-danger me-1">Blocked</span>

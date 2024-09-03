@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\StudentProfile;
 use App\Models\TeacherProfile;
+use App\Models\TeacherStudent;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +18,30 @@ class UserController extends Controller
       'users' => $user
     ];
     return view('admin.users.index',$data);
+  }
+
+  public function student(){
+    $user = User::where('type',0)->get();
+    $data = [
+      'users' => $user
+    ];
+    return view('admin.users.studentTable',$data);
+  }
+
+  public function teacher(){
+    $user = User::where('type',1)->get();
+    $data = [
+      'users' => $user
+    ];
+    return view('admin.users.teacher',$data);
+  }
+
+  public function admin(){
+    $user = User::where('type',0)->get();
+    $data = [
+      'users' => $user
+    ];
+    return view('admin.users.studentTable',$data);
   }
 
   public function create()
@@ -96,6 +122,22 @@ class UserController extends Controller
     return view('admin.users.detail',$data);
   }
 
+  public function studentDetail($id){
+    $user = User::find($id);
+    $profile = StudentProfile::where('user_id',$id)->first();
+    $instracters = TeacherStudent::where('student_id',$user->id)->get();
+    $teacher = User::where('type',1)->get();
+
+
+    $data = [
+        'user' => $user,
+        'profile' => $profile,
+        'instracters' => $instracters,
+        'teacher' => $teacher
+    ];
+    return view('admin.users.student',$data);
+  }
+
   public function downloadTeacherCv($id){
     $profile = TeacherProfile::where('user_id',$id)->first();
     $filePath = public_path($profile->file);
@@ -136,6 +178,29 @@ class UserController extends Controller
     return back()->with('success','update success');
   }
 
+  public function updateStudent(Request $request,$id){
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'status' => 'required|in:0,1,3', // Adjust status values as needed
+        'address' => 'nullable|string|max:255',
+        'phone' => 'nullable|string|max:255',
+        'Editpassword' => 'nullable|string|min:6', // Password is nullable for update
+    ]);
+    $user = User::find($id);
+    $profile = StudentProfile::where('user_id',$id)->first();
+    $user->name = $validatedData['name'];
+    if (isset($validatedData['Editpassword'])) {
+        $user->password = bcrypt($validatedData['Editpassword']);
+    }
+    $user->status = $validatedData['status'];
+
+    $user->update();
+    $profile->phone = $request->phone;
+    $profile->address = $request->address;
+    $profile->update();
+    return back()->with('success','update success');
+  }
+
   public function updateProfilePhoto(Request $request,$id){
     $request->validate([
         'image' => 'required|image|mimes:jpeg,png,jpg',
@@ -152,4 +217,53 @@ class UserController extends Controller
     $profile->update();
     return back()->with('success','update profile success');
   }
+
+  public function updateStudentPhoto(Request $request,$id){
+    $request->validate([
+        'image' => 'required|image|mimes:jpeg,png,jpg',
+    ]);
+
+    $user = User::find($id);
+    $profile = StudentProfile::where('user_id',$user->id)->first();
+    if ($request->hasFile('image')) {
+        $fileName =  time() . '.' . $request->image->extension();
+        $request->image->move(public_path('profile'), $fileName);
+        $filePath = 'profile/'.$fileName;
+        $profile->image = $filePath;
+    }
+    $profile->update();
+    return back()->with('success','update profile success');
+  }
+
+  public function assignTeacher(Request $request,$id){
+    $request->validate([
+        'teacher' => 'required|integer',
+        'reasen' => 'required|string',
+    ]);
+    $user = User::find($id);
+
+    $teacherSTudent = new TeacherStudent;
+    $teacherSTudent->teacher_id = $request->teacher;
+    $teacherSTudent->reasen = $request->reasen;
+    $teacherSTudent->student_id = $id;
+
+    $teacherSTudent->save();
+    return back()->with('success','Instarcter assign success');
+
+  }
+
+  public function updateAssignTeacher(Request $request){
+    $request->validate([
+        'teacher' => 'required|integer',
+        'reasen' => 'required|string',
+        'id' => 'required|integer'
+    ]);
+
+    $teacherSTudent =  TeacherStudent::find($request->id);
+    $teacherSTudent->teacher_id = $request->teacher;
+    $teacherSTudent->reasen = $request->reasen;
+    $teacherSTudent->save();
+    return back()->with('success','Instarcter update success');
+  }
+
 }
