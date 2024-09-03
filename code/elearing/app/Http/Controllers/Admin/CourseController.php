@@ -21,20 +21,15 @@ class CourseController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'status' => 'required|in:0,1',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'price' => 'required|integer',
         ]);
 
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-          $imageName =  time() . '.' . $request->image->extension();
-          $request->image->move(public_path('images'), $imageName);
-          $imagePath = 'images/'.$imageName;
-        }
+        dd('test');
 
         Course::create([
             'name' => $request->input('name'),
             'status' => $request->input('status'),
-            'image' => $imagePath,
+            'price' => $request->input('price'),
         ]);
 
         return redirect()->route('course')->with('success','course add  success');
@@ -44,26 +39,18 @@ class CourseController extends Controller
       $request->validate([
         'name' => 'required|string|max:255',
         'status' => 'required|string',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        'price' => 'required|integer',
         'id' => 'required|integer'
     ]);
 
     $course = Course::findOrFail($request->id);
 
-    $imagePath = $course->image;
-    if ($request->hasFile('image')) {
-        if ($course->image) {
-            Storage::disk('public')->delete($course->image);
-        }
-        $imageName =  time() . '.' . $request->image->extension();
-        $request->image->move(public_path('images'), $imageName);
-        $imagePath = 'images/'.$imageName;
-    }
+
 
     $course->update([
         'name' => $request->input('name'),
         'status' => $request->input('status'),
-        'image' => $imagePath,
+        'price' => $request->price,
     ]);
 
     return redirect()->route('course')->with('success', 'Course updated successfully.');

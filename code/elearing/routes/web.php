@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\AdminStudentFomrController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FrontEndController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReaserchController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
@@ -23,11 +26,15 @@ Route::controller(FrontEndController::class)->group(function (){
     route::get('/setCategory/{cat}','setCategory')->name('setCategory');
     route::get('/setType/{type}','setType')->name('setType');
     route::post('/setSubjects','setSubject')->name('setSubjects');
-    route::post('storeSchedule','storeSchedule')->name('storeSchedule');
+    route::post('/storeSchedule','storeSchedule')->name('storeSchedule');
     route::get('/selectShedule','selectShedule')->name('selectShedule');
     route::get('/showCheckout','showCheckout')->name('showCheckout');
     route::get('/selectGrade','selectGrade')->name('selectGrade');
-    route::post('setGrade','setGrade')->name('setGrade');
+    route::post('/setGrade','setGrade')->name('setGrade');
+    route::get('/checkout','checkout')->name('checkout');
+    route::post('/set_persenal_info','setStudentTutorila')->name('setStudentTutorila');
+    route::get('/formStudy','formStudy')->name('formStudy');
+    route::post('setStudy','setStudy')->name('setStudy');
 });
 
 Route::get('/dashboard', function () {
@@ -45,6 +52,18 @@ Route::controller(CourseController::class)->prefix('/course')->group(function ()
     route::post('/store','store')->name('storeCourse');
     route::post('/update','update')->name('updateCourse');
     route::get('/delete/{id}','delete')->name('deleteCourse');
+});
+
+Route::controller(AdminStudentFomrController::class)->prefix('forms')->group(function (){
+    route::get('/','index')->name('forms');
+    route::get('detail/{id}','detail')->name('formDetail');
+});
+
+Route::controller(ReaserchController::class)->prefix('/research')->group(function (){
+    route::get('/','index')->name('research');
+    route::post('/store','store')->name('storeresearch');
+    route::post('/update','update')->name('updateresearch');
+    route::get('/delete/{id}','delete')->name('deleteresearch');
 });
 
 Route::controller(SubjectController::class)->prefix('/subjects')->group(function (){
@@ -77,5 +96,12 @@ Route::controller(TeacherController::class)->group(function(){
     route::get('signup-instructor','signup')->name('signupInstructor');
     route::post('instructor-store','store')->name('storInstructor');
 });
+
+Route::controller(StudentController::class)->group(function(){
+    route::get('signup-student','signup')->name('signupStudent');
+    route::post('student-store','store')->name('storeStudent');
+});
+
+
 
 require __DIR__.'/auth.php';

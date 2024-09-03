@@ -5,13 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class course extends Model
+class StudentTutorial extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'status',
-        'price'
+    protected $casts = [
+        'schedule' => 'array',
+        'selected_subjects' => 'array',
     ];
 }

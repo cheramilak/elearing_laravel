@@ -19,14 +19,9 @@
                             @foreach ($subjects as $subject)
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     {{ $subject->name }}
-                                    <span class="bg-primary">{{ $subject->price }}/hr</span>
+                                    <span class="small">{{ $subject->price }}/hr</span>
                                 </li>
                             @endforeach
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Grade
-                                <span class="
-                                bg-success">{{ $grade }}</span>
-                            </li>
                         </ul>
                     </div>
                     <div class="mb-3">
@@ -34,13 +29,11 @@
                         <ul class="list-group">
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Grade
-                                <span class="
-                                bg-success">{{ $grade }}</span>
+                                <span >{{ $grade }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 type
-                                <span class="
-                                bg-success">
+                                <span>
                                 @if ($type == 1)
                                 Online
                                 @else
@@ -50,7 +43,6 @@
                             </li>
                         </ul>
                     </div>
-
                     <!-- Schedule -->
                     <div class="mb-3">
                         <h5 class="card-title">Schedule</h5>
@@ -72,15 +64,9 @@
                         </table>
                     </div>
 
-                    <!-- Total Cost -->
-                    <div class="mt-4">
-                        <h5 class="card-title">Total Cost</h5>
-                        <p class="h4">${{ number_format($totalCost, 2) }}</p>
-                    </div>
-
                     <!-- Checkout Button -->
                     <div class="mt-4">
-                        <a href="#" class="btn btn-primary">Proceed to Payment</a>
+                        <a href="{{ route('checkout') }}" class="btn btn-primary">Next</a>
                     </div>
                 </div>
             </div>

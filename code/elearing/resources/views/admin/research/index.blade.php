@@ -89,7 +89,7 @@
 
 <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
-  <form action="{{ route('storeCourse') }}" method="post">
+  <form action="{{ route('storeresearch') }}" method="post">
     @csrf
     <div class="modal-content">
       <div class="modal-header">
@@ -128,7 +128,7 @@
 
 <div class="modal fade" id="modalCenterEdit" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
-  <form action="{{ route('updateCourse') }}" method="post" enctype="multipart/form-data">
+  <form action="{{ route('updateresearch') }}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="modal-content">
       <div class="modal-header">

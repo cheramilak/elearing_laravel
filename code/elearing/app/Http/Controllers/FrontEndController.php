@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\course;
+use App\Models\ResearchConsultation;
+use App\Models\StudentTutorial;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -35,7 +37,16 @@ class FrontEndController extends Controller
     }
 
     public function selectSUbject(){
-        $subject = Subject::where('status',1)->get();
+        $cat = Session::get('cat', 0);
+        if($cat == 1){
+            $subject = Subject::where('status',1)->get();
+        }
+        else if($cat == 2){
+            $subject = ResearchConsultation::where('status',1)->get();
+        }
+        else if($cat == 3){
+            $subject = course::where('status',1)->get();
+        }
         $data = [
             'subject' => $subject
         ];
@@ -45,13 +56,17 @@ class FrontEndController extends Controller
     public function setSubject(Request $request){
         $request->validate([
             'subjects' => 'required|array',
-            'subjects.*' => 'exists:subjects,id', // Ensure each selected ID exists in the subjects table
         ]);
         // Get the selected subject IDs
         $selectedSubjects = $request->input('subjects');
         // Store the selected subjects in the session
         Session::put('selected_subjects', $selectedSubjects);
-        return redirect()->route('selectGrade');
+        $cat = Session::get('cat', 0);
+        if($cat == 1){
+            return redirect()->route('selectGrade');
+
+        }
+        return redirect()->route('formStudy');
     }
 
     public function setGrade(Request $request){
@@ -59,11 +74,24 @@ class FrontEndController extends Controller
             'grade' => 'required|integer',
         ]);
         Session::put('selectedGrade', $request->grade);
+
         return redirect()->route('selectShedule');
     }
 
     public function selectShedule(){
         return view('home.shedule');
+    }
+
+    public function formStudy(){
+        return view('home.area');
+    }
+
+    public function setStudy(Request $request){
+        $request->validate([
+            'study' => 'required|string',
+        ]);
+        Session::put('study', $request->study);
+        return redirect()->route('selectShedule');
     }
 
     public function storeSchedule(Request $request)
@@ -138,5 +166,53 @@ class FrontEndController extends Controller
             'course' => $course
         ];
         return view('home.contact',$data);
+    }
+
+    public function setStudentTutorila(Request $request){
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,',
+            'phone' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+        ]);
+        $schedule = Session::get('schedule', []);
+        // For demonstration, you might also want to retrieve the selected subject and grade
+        // Assuming you stored them in session as well
+        $selectedSubjectIds = Session::get('selected_subjects', []);
+        $cat = Session::get('cat', 0);
+        // Fetch the subjects from the database based on the selected IDs
+        if($cat == 1){
+            $subjects = Subject::whereIn('id', $selectedSubjectIds)->get();
+        }
+        else if($cat == 2){
+            $subjects = ResearchConsultation::whereIn('id', $selectedSubjectIds)->get();
+        }
+        else if($cat == 3){
+            $subjects = course::whereIn('id', $selectedSubjectIds)->get();
+        }
+        else{
+            $subjects = [];
+        }
+        $selectedGrade = Session::get('selectedGrade', 'No Grade');
+        $type = Session::get('type', 'No set');
+        $study = Session::get('study', 'No set');
+
+        $studentTutorial = new StudentTutorial;
+        $studentTutorial->cat = $cat;
+        $studentTutorial->schedule = $schedule;
+        $studentTutorial->course = $subjects;
+        $studentTutorial->selected_grade = $selectedGrade;
+        $studentTutorial->type = $type;
+        $studentTutorial->name = $request->name;
+        $studentTutorial->email = $request->email;
+        $studentTutorial->phone = $request->phone;
+        $studentTutorial->address = $request->address;
+        $studentTutorial->study = $study;
+        $studentTutorial->save();
+        return view('home.success');
+    }
+
+    public function checkout(){
+        return view('home.persenal_info');
     }
 }
