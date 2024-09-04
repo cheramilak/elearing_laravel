@@ -7,7 +7,6 @@ use App\Models\TeacherProfile;
 use App\Models\TeacherStudent;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -68,7 +67,6 @@ class UserController extends Controller
       $user->status = $validatedData['status'];
       $user->type = $validatedData['type'];
       $user->save();
-
       return redirect()->route('users')->with(['message' => 'User created successfully']);
   }
 
@@ -127,7 +125,6 @@ class UserController extends Controller
     $profile = StudentProfile::where('user_id',$id)->first();
     $instracters = TeacherStudent::where('student_id',$user->id)->get();
     $teacher = User::where('type',1)->get();
-
 
     $data = [
         'user' => $user,
